@@ -5,11 +5,43 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-function ParticleModel({ waveActive }: { waveActive: boolean }) {
+function ParticleModel({
+  waveActive,
+  explosionKey,
+}: {
+  waveActive: boolean;
+  explosionKey: number;
+}) {
   const pointsRef = useRef<THREE.Points>(null);
   const positions = useLoader(THREE.FileLoader, "/data/points.json") as string;
 
   const data = useMemo(() => JSON.parse(positions) as number[][], [positions]);
+  const explosionStart = useRef<number | null>(null);
+  const previousExplosionKey = useRef(explosionKey);
+
+  const explosionDirections = useMemo(() => {
+    const directions = new Float32Array(data.length * 4);
+
+    data.forEach((point, i) => {
+      const seed = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+      const randomA = (seed - Math.floor(seed)) * 2 - 1;
+      const seedB = Math.sin(i * 269.5 + 183.3) * 24634.6345;
+      const randomB = (seedB - Math.floor(seedB)) * 2 - 1;
+
+      const dx = point[0] * 0.75 + randomA * 0.85;
+      const dy = point[1] * 0.75 + randomB * 0.85;
+      const dz = point[2] * 0.55 + 0.65;
+      const length = Math.sqrt(dx * dx + dy * dy + dz * dz) || 1;
+      const spread = 1.8 + ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) * 0.9;
+
+      directions[i * 4] = dx / length;
+      directions[i * 4 + 1] = dy / length;
+      directions[i * 4 + 2] = dz / length;
+      directions[i * 4 + 3] = spread;
+    });
+
+    return directions;
+  }, [data]);
 
   const geometry = useMemo(() => {
     const array = new Float32Array(data.length * 3);
@@ -42,6 +74,25 @@ function ParticleModel({ waveActive }: { waveActive: boolean }) {
     const elapsed = state.clock.elapsedTime;
     const waveCenter = ((elapsed * 0.9) % 7) - 3.5;
 
+    if (explosionKey !== previousExplosionKey.current) {
+      previousExplosionKey.current = explosionKey;
+      explosionStart.current = elapsed;
+    }
+
+    let explosionAmount = 0;
+    if (explosionStart.current !== null) {
+      const progress = elapsed - explosionStart.current;
+      if (progress < 0.85) {
+        const t = Math.min(1, progress / 0.85);
+        explosionAmount = 1 - Math.pow(1 - t, 3);
+      } else if (progress < 2.8) {
+        const t = (progress - 0.85) / 1.95;
+        explosionAmount = 1 - (t * t * (3 - 2 * t));
+      } else {
+        explosionStart.current = null;
+      }
+    }
+
     for (let i = 0; i < data.length; i++) {
       const x = data[i][0];
       const baseY = data[i][1];
@@ -57,8 +108,14 @@ function ParticleModel({ waveActive }: { waveActive: boolean }) {
         offsetZ = envelope * 0.22;
       }
 
-      values[i * 3 + 1] = baseY + offsetY;
-      values[i * 3 + 2] = baseZ + offsetZ;
+      const burst = explosionAmount * explosionDirections[i * 4 + 3];
+      const burstX = explosionDirections[i * 4] * burst;
+      const burstY = explosionDirections[i * 4 + 1] * burst;
+      const burstZ = explosionDirections[i * 4 + 2] * burst;
+
+      values[i * 3] = x + burstX;
+      values[i * 3 + 1] = baseY + offsetY + burstY;
+      values[i * 3 + 2] = baseZ + offsetZ + burstZ;
     }
     positionAttribute.needsUpdate = true;
 
@@ -124,6 +181,7 @@ function AmbientDust() {
 export default function Scene() {
   const [revealed, setRevealed] = useState(false);
   const [waveActive, setWaveActive] = useState(false);
+  const [explosionKey, setExplosionKey] = useState(0);
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-[#030303] text-white">
@@ -139,7 +197,7 @@ export default function Scene() {
           gl={{ antialias: true, alpha: false }}
         >
           <AmbientDust />
-          <ParticleModel waveActive={waveActive} />
+          <ParticleModel waveActive={waveActive} explosionKey={explosionKey} />
         </Canvas>
       </div>
 
@@ -188,6 +246,16 @@ export default function Scene() {
             }`}
           >
             {waveActive ? "Stop wave" : "Particle wave"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setRevealed(false);
+              setExplosionKey((value) => value + 1);
+            }}
+            className="rounded-full border border-amber-200/30 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-amber-100/80 backdrop-blur-md transition-all duration-300 hover:border-amber-100/70 hover:bg-amber-950/30 hover:text-amber-50"
+          >
+            Particle explosion
           </button>
         </div>
       </div>
