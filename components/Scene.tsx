@@ -8,9 +8,11 @@ import * as THREE from "three";
 function ParticleModel({
   waveActive,
   explosionKey,
+  pulseActive,
 }: {
   waveActive: boolean;
   explosionKey: number;
+  pulseActive: boolean;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
   const positions = useLoader(THREE.FileLoader, "/data/points.json") as string;
@@ -125,6 +127,11 @@ function ParticleModel({
     pointsRef.current.rotation.y += (targetY - pointsRef.current.rotation.y) * 0.04;
     pointsRef.current.rotation.x += (targetX - pointsRef.current.rotation.x) * 0.04;
     pointsRef.current.position.y = 0.16 + Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
+
+    const material = pointsRef.current.material as THREE.PointsMaterial;
+    const pulse = pulseActive ? (Math.sin(elapsed * 2.4) + 1) * 0.5 : 0;
+    material.size = 0.016 + pulse * 0.006;
+    material.opacity = 0.82 + pulse * 0.16;
   });
 
   return (
@@ -182,6 +189,7 @@ export default function Scene() {
   const [revealed, setRevealed] = useState(false);
   const [waveActive, setWaveActive] = useState(false);
   const [explosionKey, setExplosionKey] = useState(0);
+  const [pulseActive, setPulseActive] = useState(false);
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-[#030303] text-white">
@@ -197,7 +205,11 @@ export default function Scene() {
           gl={{ antialias: true, alpha: false }}
         >
           <AmbientDust />
-          <ParticleModel waveActive={waveActive} explosionKey={explosionKey} />
+          <ParticleModel
+            waveActive={waveActive}
+            explosionKey={explosionKey}
+            pulseActive={pulseActive}
+          />
         </Canvas>
       </div>
 
@@ -256,6 +268,21 @@ export default function Scene() {
             className="rounded-full border border-amber-200/30 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-amber-100/80 backdrop-blur-md transition-all duration-300 hover:border-amber-100/70 hover:bg-amber-950/30 hover:text-amber-50"
           >
             Particle explosion
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setRevealed(false);
+              setPulseActive((value) => !value);
+            }}
+            aria-pressed={pulseActive}
+            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
+              pulseActive
+                ? "border-fuchsia-200/70 bg-fuchsia-950/40 text-fuchsia-100 shadow-[0_0_26px_rgba(232,121,249,0.16)]"
+                : "border-white/20 bg-black/40 text-white/65 hover:border-fuchsia-200/60 hover:text-fuchsia-100"
+            }`}
+          >
+            {pulseActive ? "Stop pulse" : "Particle pulse"}
           </button>
         </div>
       </div>
