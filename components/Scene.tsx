@@ -210,6 +210,7 @@ export default function Scene() {
   const [explosionKey, setExplosionKey] = useState(0);
   const [pulseActive, setPulseActive] = useState(false);
   const [cursorFieldActive, setCursorFieldActive] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#070607] text-white selection:bg-rose-300 selection:text-black">
@@ -248,11 +249,11 @@ export default function Scene() {
 
         <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-b from-black/55 via-transparent to-black/75" />
 
-        <header className="absolute inset-x-0 top-0 z-40 px-6 py-6 md:px-12">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between border-b border-white/10 pb-5">
-            <a href="#home" className="group flex items-center gap-3">
+        <header className="absolute inset-x-0 top-0 z-40 px-5 py-5 sm:px-6 md:px-12 md:py-6">
+          <nav className="relative mx-auto flex max-w-7xl items-center justify-between border-b border-white/10 pb-4 md:pb-5">
+            <a href="#home" className="group flex items-center gap-3" onClick={() => setMobileMenuOpen(false)}>
               <span className="flex h-9 w-9 items-center justify-center rounded-full border border-rose-200/40 text-sm text-rose-200">P.</span>
-              <span className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/85">Portrait in dots</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/85 sm:text-[11px] sm:tracking-[0.28em]">Portrait in dots</span>
             </a>
             <div className="hidden items-center gap-9 text-[10px] uppercase tracking-[0.24em] text-white/55 md:flex">
               <a className="transition hover:text-rose-200" href="#about">About</a>
@@ -260,10 +261,42 @@ export default function Scene() {
               <a className="transition hover:text-rose-200" href="#gallery">Gallery</a>
               <a className="transition hover:text-rose-200" href="#process">The process</a>
             </div>
-            <a href="#contact" className="rounded-full border border-rose-200/40 px-5 py-2.5 text-[9px] uppercase tracking-[0.22em] text-rose-100 transition hover:bg-rose-200 hover:text-black">
-              Get in touch <span aria-hidden="true">↗</span>
-            </a>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <a href="#contact" className="rounded-full border border-rose-200/40 px-3 py-2.5 text-[8px] uppercase tracking-[0.14em] text-rose-100 transition hover:bg-rose-200 hover:text-black sm:px-5 sm:text-[9px] sm:tracking-[0.22em]">
+                Get in touch <span aria-hidden="true">↗</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white/80 transition hover:border-rose-200/60 hover:text-rose-100 md:hidden"
+              >
+                <span className="text-lg leading-none">{mobileMenuOpen ? "×" : "☰"}</span>
+              </button>
+            </div>
           </nav>
+          {mobileMenuOpen && (
+            <div id="mobile-navigation" className="mx-auto mt-3 max-w-7xl rounded-2xl border border-white/10 bg-[#10090c]/95 p-3 shadow-2xl shadow-black/40 backdrop-blur-xl md:hidden">
+              {[
+                ["About", "#about"],
+                ["Experience", "#experience"],
+                ["Gallery", "#gallery"],
+                ["The process", "#process"],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between rounded-xl px-4 py-3.5 text-[10px] uppercase tracking-[0.22em] text-white/65 transition hover:bg-white/5 hover:text-rose-200"
+                >
+                  {label}
+                  <span aria-hidden="true" className="text-rose-200/60">↗</span>
+                </a>
+              ))}
+            </div>
+          )}
         </header>
 
         <div className="pointer-events-none absolute inset-x-0 top-[22%] z-30 mx-auto max-w-7xl px-7 md:top-[25%] md:px-12">
