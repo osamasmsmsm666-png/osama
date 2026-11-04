@@ -212,116 +212,225 @@ export default function Scene() {
   const [cursorFieldActive, setCursorFieldActive] = useState(false);
 
   return (
-    <main className="relative h-screen w-full overflow-hidden bg-[#030303] text-white">
-      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_50%_48%,rgba(100,8,25,0.18),transparent_48%)]" />
+    <main className="min-h-screen overflow-hidden bg-[#070607] text-white selection:bg-rose-300 selection:text-black">
+      <section id="home" className="relative min-h-[760px] h-screen overflow-hidden bg-[#030303]">
+        <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_58%_48%,rgba(100,8,25,0.22),transparent_52%)]" />
 
-      <div
-        className={`absolute inset-0 z-10 transition-opacity duration-[1400ms] ease-in-out ${revealed ? "opacity-0" : "opacity-100"}`}
-        aria-hidden={revealed}
-      >
-        <Canvas
-          camera={{ position: [0, 0, 6.2], fov: 45 }}
-          dpr={[1, 1.75]}
-          gl={{ antialias: true, alpha: false }}
+        <div
+          className={\`absolute inset-0 z-10 transition-opacity duration-[1400ms] ease-in-out \${revealed ? "opacity-0" : "opacity-100"}\`}
+          aria-hidden={revealed}
         >
-          <AmbientDust />
-          <ParticleModel
-            waveActive={waveActive}
-            explosionKey={explosionKey}
-            pulseActive={pulseActive}
-            cursorFieldActive={cursorFieldActive}
+          <Canvas
+            camera={{ position: [0, 0, 6.2], fov: 45 }}
+            dpr={[1, 1.75]}
+            gl={{ antialias: true, alpha: false }}
+          >
+            <AmbientDust />
+            <ParticleModel
+              waveActive={waveActive}
+              explosionKey={explosionKey}
+              pulseActive={pulseActive}
+              cursorFieldActive={cursorFieldActive}
+            />
+          </Canvas>
+        </div>
+
+        <div
+          className={\`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-[1400ms] ease-in-out \${revealed ? "opacity-100" : "pointer-events-none opacity-0"}\`}
+          aria-hidden={!revealed}
+        >
+          <img
+            src="/images/photo.png"
+            alt="Portrait"
+            className="h-full w-full object-contain"
           />
-        </Canvas>
-      </div>
-
-      <div
-        className={`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-[1400ms] ease-in-out ${revealed ? "opacity-100" : "pointer-events-none opacity-0"}`}
-        aria-hidden={!revealed}
-      >
-        <img
-          src="/images/photo.png"
-          alt="Portrait"
-          className="h-full w-full object-contain"
-        />
-      </div>
-
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-30 flex items-start justify-between p-6 md:p-10">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.45em] text-rose-300/70">Digital sculpture · 001</p>
-          <h1 className="mt-2 text-xl font-light tracking-[0.18em] md:text-2xl">PORTRAIT IN DOTS</h1>
         </div>
-        <p className="hidden text-[10px] uppercase tracking-[0.3em] text-white/35 md:block">Move your cursor to interact</p>
-      </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-30 flex flex-col items-center gap-4 p-7">
-        <p className="text-center text-[10px] uppercase tracking-[0.3em] text-white/45">
-          {revealed ? "The portrait, revealed" : "A portrait formed by thousands of points"}
-        </p>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => setRevealed((value) => !value)}
-            className="rounded-full border border-rose-300/40 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-rose-100 backdrop-blur-md transition-all duration-300 hover:border-rose-200 hover:bg-rose-950/50"
-          >
-            {revealed ? "Back to dots" : "Reveal portrait"}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRevealed(false);
-              setWaveActive((value) => !value);
-            }}
-            aria-pressed={waveActive}
-            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
-              waveActive
-                ? "border-cyan-200/80 bg-cyan-950/50 text-cyan-100 shadow-[0_0_28px_rgba(103,232,249,0.18)]"
-                : "border-white/20 bg-black/40 text-white/65 hover:border-cyan-200/60 hover:text-cyan-100"
-            }`}
-          >
-            {waveActive ? "Stop wave" : "Particle wave"}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRevealed(false);
-              setExplosionKey((value) => value + 1);
-            }}
-            className="rounded-full border border-amber-200/30 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-amber-100/80 backdrop-blur-md transition-all duration-300 hover:border-amber-100/70 hover:bg-amber-950/30 hover:text-amber-50"
-          >
-            Particle explosion
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRevealed(false);
-              setCursorFieldActive((value) => !value);
-            }}
-            aria-pressed={cursorFieldActive}
-            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
-              cursorFieldActive
-                ? "border-emerald-200/70 bg-emerald-950/40 text-emerald-100 shadow-[0_0_26px_rgba(110,231,183,0.16)]"
-                : "border-white/20 bg-black/40 text-white/65 hover:border-emerald-200/60 hover:text-emerald-100"
-            }`}
-          >
-            {cursorFieldActive ? "Stop cursor field" : "Cursor field"}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setRevealed(false);
-              setPulseActive((value) => !value);
-            }}
-            aria-pressed={pulseActive}
-            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
-              pulseActive
-                ? "border-fuchsia-200/70 bg-fuchsia-950/40 text-fuchsia-100 shadow-[0_0_26px_rgba(232,121,249,0.16)]"
-                : "border-white/20 bg-black/40 text-white/65 hover:border-fuchsia-200/60 hover:text-fuchsia-100"
-            }`}
-          >
-            {pulseActive ? "Stop pulse" : "Particle pulse"}
-          </button>
+        <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-b from-black/55 via-transparent to-black/75" />
+
+        <header className="absolute inset-x-0 top-0 z-40 px-6 py-6 md:px-12">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between border-b border-white/10 pb-5">
+            <a href="#home" className="group flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-rose-200/40 text-sm text-rose-200">P.</span>
+              <span className="text-[11px] font-medium uppercase tracking-[0.28em] text-white/85">Portrait in dots</span>
+            </a>
+            <div className="hidden items-center gap-9 text-[10px] uppercase tracking-[0.24em] text-white/55 md:flex">
+              <a className="transition hover:text-rose-200" href="#about">About</a>
+              <a className="transition hover:text-rose-200" href="#experience">Experience</a>
+              <a className="transition hover:text-rose-200" href="#process">The process</a>
+            </div>
+            <a href="#contact" className="rounded-full border border-rose-200/40 px-5 py-2.5 text-[9px] uppercase tracking-[0.22em] text-rose-100 transition hover:bg-rose-200 hover:text-black">
+              Get in touch <span aria-hidden="true">↗</span>
+            </a>
+          </nav>
+        </header>
+
+        <div className="pointer-events-none absolute inset-x-0 top-[22%] z-30 mx-auto max-w-7xl px-7 md:top-[25%] md:px-12">
+          <div className="max-w-[420px]">
+            <p className="mb-5 flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/75">
+              <span className="h-px w-8 bg-rose-300/70" /> A study in digital form
+            </p>
+            <h1 className="text-5xl font-extralight leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl">
+              Art, shaped
+              <br />
+              <span className="font-normal italic text-rose-200">by particles.</span>
+            </h1>
+            <p className="mt-6 max-w-[310px] text-xs leading-6 text-white/55 md:text-sm">
+              A portrait transformed into a living digital sculpture, built from thousands of individual points.
+            </p>
+            <a href="#about" className="pointer-events-auto mt-8 inline-flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-white/80 transition hover:text-rose-200">
+              Discover the project <span className="text-lg">↓</span>
+            </a>
+          </div>
         </div>
-      </div>
+
+        <div className="pointer-events-none absolute bottom-32 left-7 z-30 hidden text-[9px] uppercase tracking-[0.3em] text-white/35 md:block md:left-12">
+          <span className="text-rose-200/70">01</span> / Digital sculpture
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 z-40 flex flex-col items-center gap-4 px-4 pb-7">
+          <p className="text-center text-[9px] uppercase tracking-[0.3em] text-white/45">
+            {revealed ? "The portrait, revealed" : "A portrait formed by thousands of points"}
+          </p>
+          <div className="flex max-w-4xl flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={() => setRevealed((value) => !value)}
+              className="rounded-full border border-rose-300/40 bg-black/50 px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] text-rose-100 backdrop-blur-md transition-all hover:border-rose-200 hover:bg-rose-950/50"
+            >
+              {revealed ? "Back to dots" : "Reveal portrait"}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setRevealed(false); setWaveActive((value) => !value); }}
+              aria-pressed={waveActive}
+              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${waveActive ? "border-cyan-200/80 bg-cyan-950/50 text-cyan-100" : "border-white/20 bg-black/50 text-white/65 hover:border-cyan-200/60 hover:text-cyan-100"}\`}
+            >
+              {waveActive ? "Stop wave" : "Particle wave"}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setRevealed(false); setExplosionKey((value) => value + 1); }}
+              className="rounded-full border border-amber-200/30 bg-black/50 px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] text-amber-100/80 backdrop-blur-md transition-all hover:border-amber-100/70"
+            >
+              Particle explosion
+            </button>
+            <button
+              type="button"
+              onClick={() => { setRevealed(false); setCursorFieldActive((value) => !value); }}
+              aria-pressed={cursorFieldActive}
+              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${cursorFieldActive ? "border-emerald-200/70 bg-emerald-950/40 text-emerald-100" : "border-white/20 bg-black/50 text-white/65 hover:border-emerald-200/60 hover:text-emerald-100"}\`}
+            >
+              {cursorFieldActive ? "Stop cursor field" : "Cursor field"}
+            </button>
+            <button
+              type="button"
+              onClick={() => { setRevealed(false); setPulseActive((value) => !value); }}
+              aria-pressed={pulseActive}
+              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${pulseActive ? "border-fuchsia-200/70 bg-fuchsia-950/40 text-fuchsia-100" : "border-white/20 bg-black/50 text-white/65 hover:border-fuchsia-200/60 hover:text-fuchsia-100"}\`}
+            >
+              {pulseActive ? "Stop pulse" : "Particle pulse"}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="relative border-t border-white/10 bg-[#0b090a] px-7 py-28 md:px-12 md:py-36">
+        <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-24">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">01 — About the project</p>
+            <h2 className="mt-6 text-4xl font-extralight leading-tight tracking-[-0.04em] md:text-5xl">
+              More than an image.
+              <br /><span className="italic text-rose-200">A living form.</span>
+            </h2>
+          </div>
+          <div className="max-w-2xl self-end">
+            <p className="text-base font-light leading-8 text-white/65 md:text-lg">
+              Portrait in Dots explores the space between photography and digital sculpture. A familiar portrait is reimagined as a field of tiny points, giving a still image depth, movement, and a sense of life.
+            </p>
+            <div className="mt-10 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
+              <div><p className="text-2xl font-light text-rose-100">3D</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Particle form</p></div>
+              <div><p className="text-2xl font-light text-rose-100">Live</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Motion response</p></div>
+              <div><p className="text-2xl font-light text-rose-100">Web</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Interactive art</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" className="bg-[#100c0e] px-7 py-24 md:px-12 md:py-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">02 — The experience</p>
+              <h2 className="mt-5 text-4xl font-extralight tracking-[-0.04em] md:text-5xl">Details in every direction.</h2>
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-white/45">Explore the portrait in its different states. Each interaction reveals another side of the same digital artwork.</p>
+          </div>
+          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3">
+            <article className="bg-[#100c0e] p-8 md:p-10">
+              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">01 / FORM</span>
+              <h3 className="mt-8 text-2xl font-light">Thousands of points</h3>
+              <p className="mt-4 text-sm leading-7 text-white/45">The portrait is rebuilt from individual particles, creating a detailed sculptural silhouette.</p>
+            </article>
+            <article className="bg-[#100c0e] p-8 md:p-10">
+              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">02 / MOTION</span>
+              <h3 className="mt-8 text-2xl font-light">A responsive canvas</h3>
+              <p className="mt-4 text-sm leading-7 text-white/45">Cursor movement and the interactive controls let the artwork respond in real time.</p>
+            </article>
+            <article className="bg-[#100c0e] p-8 md:p-10">
+              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">03 / REVEAL</span>
+              <h3 className="mt-8 text-2xl font-light">Original and abstract</h3>
+              <p className="mt-4 text-sm leading-7 text-white/45">Move between the original portrait and its particle interpretation with a smooth transition.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" className="border-y border-white/10 bg-[#0b090a] px-7 py-24 md:px-12 md:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2 md:items-center">
+          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#120d10] p-8 md:p-12">
+            <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-rose-900/20 blur-3xl" />
+            <div className="relative">
+              <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">Behind the image</p>
+              <div className="mt-10 flex aspect-square items-center justify-center rounded-full border border-rose-200/10">
+                <div className="flex h-3/4 w-3/4 items-center justify-center rounded-full border border-rose-200/15">
+                  <div className="h-2/3 w-2/3 rounded-full border border-rose-200/20 bg-[radial-gradient(circle,rgba(157,35,62,0.22),transparent_68%)]" />
+                </div>
+              </div>
+              <p className="mt-8 text-center text-[9px] uppercase tracking-[0.3em] text-white/35">Image → Data → Sculpture</p>
+            </div>
+          </div>
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">03 — The process</p>
+            <h2 className="mt-6 text-4xl font-extralight leading-tight tracking-[-0.04em] md:text-5xl">From pixels to particles.</h2>
+            <p className="mt-7 text-sm leading-8 text-white/55">
+              The artwork begins with an image, which is translated into a structured point cloud. Position, depth, and visual detail work together to rebuild the portrait in a three-dimensional space.
+            </p>
+            <div className="mt-9 space-y-5">
+              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">01</span><div><h3 className="text-sm text-white/85">Capture the shape</h3><p className="mt-1 text-xs leading-6 text-white/40">Extract the portrait silhouette and image details.</p></div></div>
+              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">02</span><div><h3 className="text-sm text-white/85">Build the point cloud</h3><p className="mt-1 text-xs leading-6 text-white/40">Give each particle its own position and color.</p></div></div>
+              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">03</span><div><h3 className="text-sm text-white/85">Bring it to life</h3><p className="mt-1 text-xs leading-6 text-white/40">Render the sculpture and make it interactive.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer id="contact" className="bg-[#070607] px-7 py-16 md:px-12 md:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 md:flex-row md:items-end">
+          <div>
+            <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">A digital art experiment</p>
+            <h2 className="mt-5 text-3xl font-extralight tracking-[-0.04em] md:text-4xl">Thanks for exploring.</h2>
+            <p className="mt-4 max-w-md text-xs leading-6 text-white/40">An interactive portrait study, built for the web.</p>
+          </div>
+          <div className="flex flex-col gap-4 text-[9px] uppercase tracking-[0.22em] text-white/50 md:items-end">
+            <a className="transition hover:text-rose-200" href="https://github.com/osamasmsmsm666-png/osama" target="_blank" rel="noreferrer">View source on GitHub ↗</a>
+            <a className="transition hover:text-rose-200" href="#home">Back to top ↑</a>
+          </div>
+        </div>
+        <div className="mx-auto mt-14 flex max-w-7xl justify-between border-t border-white/10 pt-6 text-[8px] uppercase tracking-[0.2em] text-white/25">
+          <span>Portrait in dots</span><span>© 2026 — Digital sculpture</span>
+        </div>
+      </footer>
     </main>
   );
 }
