@@ -9,10 +9,12 @@ function ParticleModel({
   waveActive,
   explosionKey,
   pulseActive,
+  cursorFieldActive,
 }: {
   waveActive: boolean;
   explosionKey: number;
   pulseActive: boolean;
+  cursorFieldActive: boolean;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
   const positions = useLoader(THREE.FileLoader, "/data/points.json") as string;
@@ -99,8 +101,25 @@ function ParticleModel({
       const x = data[i][0];
       const baseY = data[i][1];
       const baseZ = data[i][2];
+      let offsetX = 0;
       let offsetY = 0;
       let offsetZ = 0;
+
+      if (cursorFieldActive) {
+        // Convert the normalized pointer into the portrait's local coordinate space.
+        const cursorX = state.pointer.x * 2.8;
+        const cursorY = state.pointer.y * 2.0;
+        const dx = x - cursorX;
+        const dy = baseY - cursorY;
+        const distanceSquared = dx * dx + dy * dy;
+        const influence = Math.exp(-distanceSquared / 0.16);
+        const distance = Math.sqrt(distanceSquared) || 0.001;
+
+        // A soft repulsion field: nearby particles drift away from the cursor.
+        offsetX += (dx / distance) * influence * 0.24;
+        offsetY += (dy / distance) * influence * 0.24;
+        offsetZ += influence * 0.16;
+      }
 
       if (waveActive) {
         const distance = x - waveCenter;
@@ -115,7 +134,7 @@ function ParticleModel({
       const burstY = explosionDirections[i * 4 + 1] * burst;
       const burstZ = explosionDirections[i * 4 + 2] * burst;
 
-      values[i * 3] = x + burstX;
+      values[i * 3] = x + offsetX + burstX;
       values[i * 3 + 1] = baseY + offsetY + burstY;
       values[i * 3 + 2] = baseZ + offsetZ + burstZ;
     }
@@ -190,6 +209,7 @@ export default function Scene() {
   const [waveActive, setWaveActive] = useState(false);
   const [explosionKey, setExplosionKey] = useState(0);
   const [pulseActive, setPulseActive] = useState(false);
+  const [cursorFieldActive, setCursorFieldActive] = useState(false);
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-[#030303] text-white">
@@ -209,6 +229,7 @@ export default function Scene() {
             waveActive={waveActive}
             explosionKey={explosionKey}
             pulseActive={pulseActive}
+            cursorFieldActive={cursorFieldActive}
           />
         </Canvas>
       </div>
@@ -268,6 +289,21 @@ export default function Scene() {
             className="rounded-full border border-amber-200/30 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-amber-100/80 backdrop-blur-md transition-all duration-300 hover:border-amber-100/70 hover:bg-amber-950/30 hover:text-amber-50"
           >
             Particle explosion
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setRevealed(false);
+              setCursorFieldActive((value) => !value);
+            }}
+            aria-pressed={cursorFieldActive}
+            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
+              cursorFieldActive
+                ? "border-emerald-200/70 bg-emerald-950/40 text-emerald-100 shadow-[0_0_26px_rgba(110,231,183,0.16)]"
+                : "border-white/20 bg-black/40 text-white/65 hover:border-emerald-200/60 hover:text-emerald-100"
+            }`}
+          >
+            {cursorFieldActive ? "Stop cursor field" : "Cursor field"}
           </button>
           <button
             type="button"
