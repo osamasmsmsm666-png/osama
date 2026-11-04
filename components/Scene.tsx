@@ -430,39 +430,63 @@ export default function Scene() {
             <p className="max-w-sm text-sm leading-7 text-white/45">Three stages of the artwork, from the original portrait to the sculptural shapes used to build its particle form.</p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e]">
-              <div className="relative aspect-[4/5] overflow-hidden bg-black">
-                <img src="/images/photo.png" alt="Original portrait reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">01 / Original</span>
+          <div className="mt-14 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+            <figure className="group relative min-w-0 overflow-hidden rounded-2xl border border-white/10 bg-[#100c0e]">
+              <div className="relative min-h-[420px] overflow-hidden bg-[radial-gradient(ellipse_at_center,rgba(115,20,42,0.2),#050405_72%)] sm:min-h-[560px]">
+                <img
+                  src="/images/photo.png"
+                  alt="Original portrait reference"
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-contain p-8 transition-transform duration-700 ease-out group-hover:scale-[1.035] sm:p-12"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/15" />
+                <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/45 px-3 py-2 text-[8px] uppercase tracking-[0.24em] text-white/70 backdrop-blur-md">01 / Original portrait</span>
+                <figcaption className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:flex-row sm:items-end sm:justify-between sm:p-8">
+                  <div>
+                    <p className="text-[9px] uppercase tracking-[0.3em] text-rose-200/75">The starting point</p>
+                    <h3 className="mt-2 text-2xl font-light tracking-tight sm:text-3xl">The source image</h3>
+                    <p className="mt-2 max-w-md text-xs leading-6 text-white/50">The photograph behind the entire digital sculpture.</p>
+                  </div>
+                  <span className="hidden text-3xl font-extralight text-white/25 sm:block">01</span>
+                </figcaption>
               </div>
-              <figcaption className="p-5">
-                <h3 className="text-lg font-light">The source image</h3>
-                <p className="mt-2 text-xs leading-6 text-white/40">The portrait that inspires the digital artwork.</p>
-              </figcaption>
             </figure>
 
-            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e]">
-              <div className="relative aspect-[4/5] overflow-hidden bg-black">
-                <img src="/images/clay-front.png" alt="Front clay silhouette reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">02 / Front view</span>
-              </div>
-              <figcaption className="p-5">
-                <h3 className="text-lg font-light">The front silhouette</h3>
-                <p className="mt-2 text-xs leading-6 text-white/40">A shape reference used to define the portrait outline.</p>
-              </figcaption>
-            </figure>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <figure className="group relative grid min-w-0 grid-cols-[0.9fr_1.1fr] overflow-hidden rounded-2xl border border-white/10 bg-[#100c0e]">
+                <div className="relative min-h-[230px] overflow-hidden bg-[radial-gradient(ellipse_at_center,rgba(115,20,42,0.16),#050405_72%)] sm:min-h-[260px]">
+                  <img
+                    src="/images/clay-front.png"
+                    alt="Front clay silhouette reference"
+                    loading="lazy"
+                    className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-105 sm:p-5"
+                  />
+                </div>
+                <figcaption className="flex flex-col justify-center border-l border-white/10 p-4 sm:p-6">
+                  <span className="text-[8px] uppercase tracking-[0.22em] text-rose-200/70">02 / Front view</span>
+                  <h3 className="mt-3 text-lg font-light sm:text-xl">The silhouette</h3>
+                  <p className="mt-2 text-[11px] leading-5 text-white/40">The front-facing shape that guides the portrait outline.</p>
+                  <span className="mt-5 text-xl font-extralight text-white/20">02</span>
+                </figcaption>
+              </figure>
 
-            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e] sm:col-span-2 lg:col-span-1">
-              <div className="relative aspect-[4/5] overflow-hidden bg-black">
-                <img src="/images/clay-side.png" alt="Side clay silhouette reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">03 / Side view</span>
-              </div>
-              <figcaption className="p-5">
-                <h3 className="text-lg font-light">The depth reference</h3>
-                <p className="mt-2 text-xs leading-6 text-white/40">A side silhouette that helps shape the 3D point cloud.</p>
-              </figcaption>
-            </figure>
+              <figure className="group relative grid min-w-0 grid-cols-[0.9fr_1.1fr] overflow-hidden rounded-2xl border border-white/10 bg-[#100c0e]">
+                <div className="relative min-h-[230px] overflow-hidden bg-[radial-gradient(ellipse_at_center,rgba(115,20,42,0.16),#050405_72%)] sm:min-h-[260px]">
+                  <img
+                    src="/images/clay-side.png"
+                    alt="Side clay silhouette reference"
+                    loading="lazy"
+                    className="h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-105 sm:p-5"
+                  />
+                </div>
+                <figcaption className="flex flex-col justify-center border-l border-white/10 p-4 sm:p-6">
+                  <span className="text-[8px] uppercase tracking-[0.22em] text-rose-200/70">03 / Side view</span>
+                  <h3 className="mt-3 text-lg font-light sm:text-xl">The depth study</h3>
+                  <p className="mt-2 text-[11px] leading-5 text-white/40">A side reference that informs the sculpture's 3D depth.</p>
+                  <span className="mt-5 text-xl font-extralight text-white/20">03</span>
+                </figcaption>
+              </figure>
+            </div>
           </div>
         </div>
       </section>
