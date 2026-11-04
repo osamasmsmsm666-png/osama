@@ -423,31 +423,82 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="experience" className="bg-[#100c0e] px-6 py-20 sm:px-7 sm:py-24 md:px-12 md:py-32">
+      <section id="experience" className="relative overflow-hidden bg-[#100c0e] px-6 py-24 sm:px-7 sm:py-28 md:px-12 md:py-36">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div className="grid gap-8 border-b border-white/10 pb-10 md:grid-cols-[1fr_0.7fr] md:items-end md:pb-14">
             <div>
-              <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">02 — The experience</p>
-              <h2 className="mt-5 text-4xl font-extralight tracking-[-0.04em] md:text-5xl">Details in every direction.</h2>
+              <p className="flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/70">
+                <span className="h-px w-7 bg-rose-300/60" /> 02 — The experience
+              </p>
+              <h2 className="mt-7 max-w-2xl text-4xl font-extralight leading-[1.1] tracking-[-0.055em] sm:text-5xl md:text-6xl">
+                Details in every
+                <span className="ml-2 italic text-rose-200">direction.</span>
+              </h2>
             </div>
-            <p className="max-w-sm text-sm leading-7 text-white/45">Explore the portrait in its different states. Each interaction reveals another side of the same digital artwork.</p>
+            <div className="md:justify-self-end md:pb-1">
+              <p className="max-w-md text-sm leading-7 text-white/50">
+                Explore the portrait in its different states. Each interaction reveals another side of the same digital artwork.
+              </p>
+              <p className="mt-5 text-[9px] uppercase tracking-[0.25em] text-white/30">Three ways to experience the artwork</p>
+            </div>
           </div>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 md:grid-cols-3">
-            <article className="bg-[#100c0e] p-8 md:p-10">
-              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">01 / FORM</span>
-              <h3 className="mt-8 text-2xl font-light">Thousands of points</h3>
-              <p className="mt-4 text-sm leading-7 text-white/45">The portrait is rebuilt from individual particles, creating a detailed sculptural silhouette.</p>
+
+          <div className="mt-8 grid gap-3 md:mt-10 md:grid-cols-3">
+            <article className="group flex min-h-[310px] flex-col border border-white/10 bg-[#0c090b] p-6 sm:p-8 md:min-h-[350px]">
+              <div className="flex items-start justify-between">
+                <span className="text-[9px] uppercase tracking-[0.24em] text-rose-200/70">01 / Form</span>
+                <span className="text-4xl font-extralight tracking-[-0.08em] text-white/15 transition-colors duration-300 group-hover:text-rose-200/40">01</span>
+              </div>
+              <div className="mt-auto">
+                <div className="mb-6 h-px w-full bg-white/10">
+                  <div className="h-px w-1/3 bg-rose-200/60" />
+                </div>
+                <h3 className="text-2xl font-light tracking-tight text-white/90 sm:text-[1.7rem]">Thousands of points</h3>
+                <p className="mt-4 max-w-sm text-sm leading-7 text-white/45">
+                  The portrait is rebuilt from individual particles, creating a detailed sculptural silhouette.
+                </p>
+                <p className="mt-7 text-[8px] uppercase tracking-[0.22em] text-rose-200/55">Structure · Detail · Depth</p>
+              </div>
             </article>
-            <article className="bg-[#100c0e] p-8 md:p-10">
-              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">02 / MOTION</span>
-              <h3 className="mt-8 text-2xl font-light">A responsive canvas</h3>
-              <p className="mt-4 text-sm leading-7 text-white/45">Cursor movement and the interactive controls let the artwork respond in real time.</p>
+
+            <article className="group flex min-h-[310px] flex-col border border-white/10 bg-[#130d10] p-6 sm:p-8 md:min-h-[350px]">
+              <div className="flex items-start justify-between">
+                <span className="text-[9px] uppercase tracking-[0.24em] text-rose-200/70">02 / Motion</span>
+                <span className="text-4xl font-extralight tracking-[-0.08em] text-white/15 transition-colors duration-300 group-hover:text-rose-200/40">02</span>
+              </div>
+              <div className="mt-auto">
+                <div className="mb-6 h-px w-full bg-white/10">
+                  <div className="h-px w-2/3 bg-rose-200/60" />
+                </div>
+                <h3 className="text-2xl font-light tracking-tight text-white/90 sm:text-[1.7rem]">A responsive canvas</h3>
+                <p className="mt-4 max-w-sm text-sm leading-7 text-white/45">
+                  Cursor movement and the interactive controls let the artwork respond in real time.
+                </p>
+                <p className="mt-7 text-[8px] uppercase tracking-[0.22em] text-rose-200/55">Movement · Response · Energy</p>
+              </div>
             </article>
-            <article className="bg-[#100c0e] p-8 md:p-10">
-              <span className="text-[10px] tracking-[0.2em] text-rose-200/70">03 / REVEAL</span>
-              <h3 className="mt-8 text-2xl font-light">Original and abstract</h3>
-              <p className="mt-4 text-sm leading-7 text-white/45">Move between the original portrait and its particle interpretation with a smooth transition.</p>
+
+            <article className="group flex min-h-[310px] flex-col border border-white/10 bg-[#0c090b] p-6 sm:p-8 md:min-h-[350px]">
+              <div className="flex items-start justify-between">
+                <span className="text-[9px] uppercase tracking-[0.24em] text-rose-200/70">03 / Reveal</span>
+                <span className="text-4xl font-extralight tracking-[-0.08em] text-white/15 transition-colors duration-300 group-hover:text-rose-200/40">03</span>
+              </div>
+              <div className="mt-auto">
+                <div className="mb-6 h-px w-full bg-white/10">
+                  <div className="h-px w-full bg-rose-200/60" />
+                </div>
+                <h3 className="text-2xl font-light tracking-tight text-white/90 sm:text-[1.7rem]">Original and abstract</h3>
+                <p className="mt-4 max-w-sm text-sm leading-7 text-white/45">
+                  Move between the original portrait and its particle interpretation with a smooth transition.
+                </p>
+                <p className="mt-7 text-[8px] uppercase tracking-[0.22em] text-rose-200/55">Photography · Contrast · Art</p>
+              </div>
             </article>
+          </div>
+
+          <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-5 text-[8px] uppercase tracking-[0.22em] text-white/30 sm:flex-row sm:items-center sm:justify-between">
+            <span>One portrait, multiple perspectives</span>
+            <span>02 / 05</span>
           </div>
         </div>
       </section>
