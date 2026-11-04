@@ -5,12 +5,13 @@ import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-function ParticleModel() {
+function ParticleModel({ waveActive }: { waveActive: boolean }) {
   const pointsRef = useRef<THREE.Points>(null);
   const positions = useLoader(THREE.FileLoader, "/data/points.json") as string;
 
+  const data = useMemo(() => JSON.parse(positions) as number[][], [positions]);
+
   const geometry = useMemo(() => {
-    const data: number[][] = JSON.parse(positions);
     const array = new Float32Array(data.length * 3);
     const colors = new Float32Array(data.length * 3);
 
@@ -31,10 +32,36 @@ function ParticleModel() {
     geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     geo.computeBoundingSphere();
     return geo;
-  }, [positions]);
+  }, [data]);
 
   useFrame((state) => {
     if (!pointsRef.current) return;
+
+    const positionAttribute = geometry.getAttribute("position") as THREE.BufferAttribute;
+    const values = positionAttribute.array as Float32Array;
+    const elapsed = state.clock.elapsedTime;
+    const waveCenter = ((elapsed * 0.9) % 7) - 3.5;
+
+    for (let i = 0; i < data.length; i++) {
+      const x = data[i][0];
+      const baseY = data[i][1];
+      const baseZ = data[i][2];
+      let offsetY = 0;
+      let offsetZ = 0;
+
+      if (waveActive) {
+        const distance = x - waveCenter;
+        const envelope = Math.exp(-(distance * distance) / 0.22);
+        const ripple = Math.sin(distance * 13 - elapsed * 7);
+        offsetY = envelope * ripple * 0.16;
+        offsetZ = envelope * 0.22;
+      }
+
+      values[i * 3 + 1] = baseY + offsetY;
+      values[i * 3 + 2] = baseZ + offsetZ;
+    }
+    positionAttribute.needsUpdate = true;
+
     const targetY = state.pointer.x * 0.3;
     const targetX = -state.pointer.y * 0.15;
 
@@ -96,6 +123,7 @@ function AmbientDust() {
 
 export default function Scene() {
   const [revealed, setRevealed] = useState(false);
+  const [waveActive, setWaveActive] = useState(false);
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-[#030303] text-white">
@@ -111,7 +139,7 @@ export default function Scene() {
           gl={{ antialias: true, alpha: false }}
         >
           <AmbientDust />
-          <ParticleModel />
+          <ParticleModel waveActive={waveActive} />
         </Canvas>
       </div>
 
@@ -138,13 +166,30 @@ export default function Scene() {
         <p className="text-center text-[10px] uppercase tracking-[0.3em] text-white/45">
           {revealed ? "The portrait, revealed" : "A portrait formed by thousands of points"}
         </p>
-        <button
-          type="button"
-          onClick={() => setRevealed((value) => !value)}
-          className="rounded-full border border-rose-300/40 bg-black/40 px-8 py-3 text-[10px] uppercase tracking-[0.3em] text-rose-100 backdrop-blur-md transition-all duration-300 hover:border-rose-200 hover:bg-rose-950/50"
-        >
-          {revealed ? "Back to dots" : "Reveal portrait"}
-        </button>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setRevealed((value) => !value)}
+            className="rounded-full border border-rose-300/40 bg-black/40 px-7 py-3 text-[10px] uppercase tracking-[0.3em] text-rose-100 backdrop-blur-md transition-all duration-300 hover:border-rose-200 hover:bg-rose-950/50"
+          >
+            {revealed ? "Back to dots" : "Reveal portrait"}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setRevealed(false);
+              setWaveActive((value) => !value);
+            }}
+            aria-pressed={waveActive}
+            className={`rounded-full border px-7 py-3 text-[10px] uppercase tracking-[0.3em] backdrop-blur-md transition-all duration-300 ${
+              waveActive
+                ? "border-cyan-200/80 bg-cyan-950/50 text-cyan-100 shadow-[0_0_28px_rgba(103,232,249,0.18)]"
+                : "border-white/20 bg-black/40 text-white/65 hover:border-cyan-200/60 hover:text-cyan-100"
+            }`}
+          >
+            {waveActive ? "Stop wave" : "Particle wave"}
+          </button>
+        </div>
       </div>
     </main>
   );
