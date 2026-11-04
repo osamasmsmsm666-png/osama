@@ -63,11 +63,19 @@ async function main() {
       // Increase local contrast so facial and clothing features influence point brightness.
       const detail = Math.max(0, Math.min(1, (205 - photoBrightness) / 135));
 
+      // Keep the original photo's color so the particle portrait resembles the source image.
+      const red = photo[i] / 255;
+      const green = photo[i + 1] / 255;
+      const blue = photo[i + 2] / 255;
+
       points.push([
         (x / WIDTH - 0.5) * 4,
         (0.5 - y / HEIGHT) * 4,
         (depth / WIDTH - 0.5) * 2,
-        detail
+        detail,
+        red,
+        green,
+        blue
       ]);
     }
   }
