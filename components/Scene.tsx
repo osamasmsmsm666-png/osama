@@ -264,6 +264,7 @@ export default function Scene() {
               <a className="transition hover:text-rose-200" href="#experience">Experience</a>
               <a className="transition hover:text-rose-200" href="#gallery">Gallery</a>
               <a className="transition hover:text-rose-200" href="#process">The process</a>
+              <a className="transition hover:text-rose-200" href="#details">Details</a>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
               <a href="#contact" className="rounded-full border border-rose-200/40 px-3 py-2.5 text-[8px] uppercase tracking-[0.14em] text-rose-100 transition hover:bg-rose-200 hover:text-black sm:px-5 sm:text-[9px] sm:tracking-[0.22em]">
@@ -288,6 +289,7 @@ export default function Scene() {
                 ["Experience", "#experience"],
                 ["Gallery", "#gallery"],
                 ["The process", "#process"],
+                ["Project details", "#details"],
               ].map(([label, href]) => (
                 <a
                   key={href}
@@ -663,6 +665,61 @@ export default function Scene() {
                 <span>04 / 05</span>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="details" className="relative overflow-hidden border-t border-white/10 bg-[#100c0e] px-6 py-24 sm:px-7 sm:py-28 md:px-12 md:py-36">
+        <div className="pointer-events-none absolute -left-32 top-10 h-80 w-80 rounded-full bg-rose-950/20 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+            <div>
+              <p className="flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/70">
+                <span className="h-px w-7 bg-rose-300/60" /> 05 — Project details
+              </p>
+              <h2 className="mt-7 max-w-lg text-4xl font-extralight leading-[1.1] tracking-[-0.055em] sm:text-5xl md:text-6xl">
+                The craft behind
+                <span className="ml-2 italic text-rose-200">the image.</span>
+              </h2>
+              <p className="mt-6 max-w-md text-sm leading-7 text-white/50">
+                A combination of web technologies turns image data into a real-time 3D experience, right inside the browser.
+              </p>
+              <a href="#home" className="mt-8 inline-flex items-center gap-3 text-[9px] uppercase tracking-[0.25em] text-rose-100/75 transition hover:text-rose-100">
+                Explore the portrait <span aria-hidden="true">↑</span>
+              </a>
+            </div>
+
+            <div className="border-y border-white/10">
+              <div className="grid grid-cols-[1fr_auto] items-center gap-5 border-b border-white/10 py-6 sm:py-7">
+                <div>
+                  <p className="text-[8px] uppercase tracking-[0.25em] text-rose-200/65">01 / Framework</p>
+                  <h3 className="mt-2 text-xl font-light text-white/90 sm:text-2xl">Next.js & React</h3>
+                  <p className="mt-2 text-xs leading-6 text-white/40">The application structure and reusable interface.</p>
+                </div>
+                <span className="text-2xl font-extralight text-white/20">N/R</span>
+              </div>
+              <div className="grid grid-cols-[1fr_auto] items-center gap-5 border-b border-white/10 py-6 sm:py-7">
+                <div>
+                  <p className="text-[8px] uppercase tracking-[0.25em] text-rose-200/65">02 / 3D rendering</p>
+                  <h3 className="mt-2 text-xl font-light text-white/90 sm:text-2xl">Three.js & React Three Fiber</h3>
+                  <p className="mt-2 text-xs leading-6 text-white/40">A GPU-rendered point cloud with interactive camera movement.</p>
+                </div>
+                <span className="text-2xl font-extralight text-white/20">3D</span>
+              </div>
+              <div className="grid grid-cols-[1fr_auto] items-center gap-5 py-6 sm:py-7">
+                <div>
+                  <p className="text-[8px] uppercase tracking-[0.25em] text-rose-200/65">03 / Styling</p>
+                  <h3 className="mt-2 text-xl font-light text-white/90 sm:text-2xl">Tailwind CSS</h3>
+                  <p className="mt-2 text-xs leading-6 text-white/40">Responsive layouts, typography, and visual consistency.</p>
+                </div>
+                <span className="text-2xl font-extralight text-white/20">CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-5 text-[8px] uppercase tracking-[0.22em] text-white/30 sm:flex-row sm:items-center sm:justify-between">
+            <span>Designed as an interactive web artwork</span>
+            <span>05 / 05</span>
           </div>
         </div>
       </section>
