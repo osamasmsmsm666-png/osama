@@ -42,17 +42,17 @@ function ParticleModel() {
       (targetX - pointsRef.current.rotation.x) * 0.04;
 
     pointsRef.current.position.y =
-      Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
+      0.16 + Math.sin(state.clock.elapsedTime * 0.65) * 0.025;
   });
 
   return (
-    <points ref={pointsRef} geometry={geometry} scale={1.3}>
+    <points ref={pointsRef} geometry={geometry} scale={1.15}>
       <pointsMaterial
         color="#B5122D"
-        size={0.019}
+        size={0.017}
         sizeAttenuation
         transparent
-        opacity={0.95}
+        opacity={0.96}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -107,7 +107,7 @@ export default function Scene() {
     <div className="relative h-screen w-full overflow-hidden bg-[#030303]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_48%,rgba(100,8,25,0.16),transparent_48%)]" />
       <Canvas
-        camera={{ position: [0, 0, 5.5], fov: 45 }}
+        camera={{ position: [0, 0, 6.2], fov: 45 }}
         dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: false }}
       >
