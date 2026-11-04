@@ -214,7 +214,7 @@ export default function Scene() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#070607] text-white selection:bg-rose-300 selection:text-black">
-      <section id="home" className="relative min-h-[760px] h-[100svh] overflow-hidden bg-[#030303]">
+      <section id="home" className="relative min-h-[820px] h-[100svh] overflow-hidden bg-[#030303] sm:min-h-[760px]">
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_58%_48%,rgba(100,8,25,0.22),transparent_52%)]" />
 
         <div
@@ -299,17 +299,17 @@ export default function Scene() {
           )}
         </header>
 
-        <div className="pointer-events-none absolute inset-x-0 top-[22%] z-30 mx-auto max-w-7xl px-7 md:top-[25%] md:px-12">
+        <div className="pointer-events-none absolute inset-x-0 top-[19%] z-30 mx-auto max-w-7xl px-6 sm:top-[22%] sm:px-7 md:top-[25%] md:px-12">
           <div className="max-w-[420px]">
             <p className="mb-5 flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/75">
               <span className="h-px w-8 bg-rose-300/70" /> A study in digital form
             </p>
-            <h1 className="text-5xl font-extralight leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl">
+            <h1 className="text-[2.7rem] font-extralight leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl">
               Art, shaped
               <br />
               <span className="font-normal italic text-rose-200">by particles.</span>
             </h1>
-            <p className="mt-6 max-w-[310px] text-xs leading-6 text-white/55 md:text-sm">
+            <p className="mt-5 max-w-[290px] text-[11px] leading-5 text-white/55 sm:mt-6 sm:max-w-[310px] sm:text-xs sm:leading-6 md:text-sm">
               A portrait transformed into a living digital sculpture, built from thousands of individual points.
             </p>
             <a href="#about" className="pointer-events-auto mt-8 inline-flex items-center gap-4 text-[9px] uppercase tracking-[0.28em] text-white/80 transition hover:text-rose-200">
@@ -322,15 +322,15 @@ export default function Scene() {
           <span className="text-rose-200/70">01</span> / Digital sculpture
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-40 flex flex-col items-center gap-3 px-3 pb-5 sm:gap-4 sm:px-4 sm:pb-7">
+        <div className="absolute inset-x-0 bottom-0 z-40 flex flex-col items-center gap-2 px-3 pb-4 sm:gap-4 sm:px-4 sm:pb-7">
           <p className="text-center text-[9px] uppercase tracking-[0.3em] text-white/45">
             {revealed ? "The portrait, revealed" : "A portrait formed by thousands of points"}
           </p>
-          <div className="flex w-full max-w-4xl flex-wrap items-center justify-center gap-2">
+          <div className="flex w-full max-w-4xl flex-wrap items-center justify-center gap-1.5 sm:gap-2">
             <button
               type="button"
               onClick={() => setRevealed((value) => !value)}
-              className="rounded-full border border-rose-300/40 bg-black/50 px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] text-rose-100 backdrop-blur-md transition-all hover:border-rose-200 hover:bg-rose-950/50"
+              className="rounded-full border border-rose-300/40 bg-black/50 px-3 py-2 text-[8px] uppercase tracking-[0.14em] text-rose-100 backdrop-blur-md transition-all hover:border-rose-200 hover:bg-rose-950/50 sm:px-5 sm:py-2.5 sm:text-[9px] sm:tracking-[0.2em]"
             >
               {revealed ? "Back to dots" : "Reveal portrait"}
             </button>
@@ -338,14 +338,14 @@ export default function Scene() {
               type="button"
               onClick={() => { setRevealed(false); setWaveActive((value) => !value); }}
               aria-pressed={waveActive}
-              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${waveActive ? "border-cyan-200/80 bg-cyan-950/50 text-cyan-100" : "border-white/20 bg-black/50 text-white/65 hover:border-cyan-200/60 hover:text-cyan-100"}\`}
+              className={\`rounded-full border px-3 py-2 text-[8px] uppercase tracking-[0.14em] backdrop-blur-md transition-all sm:px-5 sm:py-2.5 sm:text-[9px] sm:tracking-[0.2em] \${waveActive ? "border-cyan-200/80 bg-cyan-950/50 text-cyan-100" : "border-white/20 bg-black/50 text-white/65 hover:border-cyan-200/60 hover:text-cyan-100"}\`}
             >
               {waveActive ? "Stop wave" : "Particle wave"}
             </button>
             <button
               type="button"
               onClick={() => { setRevealed(false); setExplosionKey((value) => value + 1); }}
-              className="rounded-full border border-amber-200/30 bg-black/50 px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] text-amber-100/80 backdrop-blur-md transition-all hover:border-amber-100/70"
+              className="rounded-full border border-amber-200/30 bg-black/50 px-3 py-2 text-[8px] uppercase tracking-[0.14em] text-amber-100/80 backdrop-blur-md transition-all hover:border-amber-100/70 sm:px-5 sm:py-2.5 sm:text-[9px] sm:tracking-[0.2em]"
             >
               Particle explosion
             </button>
@@ -353,7 +353,7 @@ export default function Scene() {
               type="button"
               onClick={() => { setRevealed(false); setCursorFieldActive((value) => !value); }}
               aria-pressed={cursorFieldActive}
-              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${cursorFieldActive ? "border-emerald-200/70 bg-emerald-950/40 text-emerald-100" : "border-white/20 bg-black/50 text-white/65 hover:border-emerald-200/60 hover:text-emerald-100"}\`}
+              className={\`rounded-full border px-3 py-2 text-[8px] uppercase tracking-[0.14em] backdrop-blur-md transition-all sm:px-5 sm:py-2.5 sm:text-[9px] sm:tracking-[0.2em] \${cursorFieldActive ? "border-emerald-200/70 bg-emerald-950/40 text-emerald-100" : "border-white/20 bg-black/50 text-white/65 hover:border-emerald-200/60 hover:text-emerald-100"}\`}
             >
               {cursorFieldActive ? "Stop cursor field" : "Cursor field"}
             </button>
@@ -361,7 +361,7 @@ export default function Scene() {
               type="button"
               onClick={() => { setRevealed(false); setPulseActive((value) => !value); }}
               aria-pressed={pulseActive}
-              className={\`rounded-full border px-5 py-2.5 text-[9px] uppercase tracking-[0.2em] backdrop-blur-md transition-all \${pulseActive ? "border-fuchsia-200/70 bg-fuchsia-950/40 text-fuchsia-100" : "border-white/20 bg-black/50 text-white/65 hover:border-fuchsia-200/60 hover:text-fuchsia-100"}\`}
+              className={\`rounded-full border px-3 py-2 text-[8px] uppercase tracking-[0.14em] backdrop-blur-md transition-all sm:px-5 sm:py-2.5 sm:text-[9px] sm:tracking-[0.2em] \${pulseActive ? "border-fuchsia-200/70 bg-fuchsia-950/40 text-fuchsia-100" : "border-white/20 bg-black/50 text-white/65 hover:border-fuchsia-200/60 hover:text-fuchsia-100"}\`}
             >
               {pulseActive ? "Stop pulse" : "Particle pulse"}
             </button>
@@ -369,7 +369,7 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="about" className="relative border-t border-white/10 bg-[#0b090a] px-7 py-28 md:px-12 md:py-36">
+      <section id="about" className="relative border-t border-white/10 bg-[#0b090a] px-6 py-20 sm:px-7 sm:py-28 md:px-12 md:py-36">
         <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-24">
           <div>
             <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">01 — About the project</p>
@@ -391,7 +391,7 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="experience" className="bg-[#100c0e] px-7 py-24 md:px-12 md:py-32">
+      <section id="experience" className="bg-[#100c0e] px-6 py-20 sm:px-7 sm:py-24 md:px-12 md:py-32">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
@@ -420,7 +420,7 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="gallery" className="bg-[#080708] px-6 py-24 sm:px-8 md:px-12 md:py-32">
+      <section id="gallery" className="bg-[#080708] px-5 py-20 sm:px-8 sm:py-24 md:px-12 md:py-32">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
@@ -467,7 +467,7 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="process" className="border-y border-white/10 bg-[#0b090a] px-7 py-24 md:px-12 md:py-32">
+      <section id="process" className="border-y border-white/10 bg-[#0b090a] px-6 py-20 sm:px-7 sm:py-24 md:px-12 md:py-32">
         <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2 md:items-center">
           <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#120d10] p-8 md:p-12">
             <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-rose-900/20 blur-3xl" />
@@ -496,7 +496,7 @@ export default function Scene() {
         </div>
       </section>
 
-      <footer id="contact" className="bg-[#070607] px-7 py-16 md:px-12 md:py-20">
+      <footer id="contact" className="bg-[#070607] px-6 py-14 sm:px-7 sm:py-16 md:px-12 md:py-20">
         <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 md:flex-row md:items-end">
           <div>
             <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">A digital art experiment</p>
