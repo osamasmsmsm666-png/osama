@@ -57,10 +57,14 @@ function ParticleModel({
       array[i * 3 + 2] = point[2];
 
       const detail = point[3] ?? 0.45;
-      const glow = 0.28 + detail * 0.9;
-      colors[i * 3] = Math.min(1, glow);
-      colors[i * 3 + 1] = 0.012 + detail * 0.025;
-      colors[i * 3 + 2] = 0.035 + detail * 0.075;
+      // Blend the source photo's natural colors with the site's rose palette.
+      const photoRed = point[4] ?? 0.8;
+      const photoGreen = point[5] ?? 0.12;
+      const photoBlue = point[6] ?? 0.2;
+      const lift = 0.42 + detail * 0.58;
+      colors[i * 3] = Math.min(1, (photoRed * 0.72 + 0.28) * lift);
+      colors[i * 3 + 1] = Math.min(0.72, (photoGreen * 0.62 + 0.035) * lift);
+      colors[i * 3 + 2] = Math.min(0.78, (photoBlue * 0.62 + 0.065) * lift);
     });
 
     const geo = new THREE.BufferGeometry();
