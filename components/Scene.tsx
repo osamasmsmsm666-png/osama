@@ -213,7 +213,7 @@ export default function Scene() {
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#070607] text-white selection:bg-rose-300 selection:text-black">
-      <section id="home" className="relative min-h-[760px] h-screen overflow-hidden bg-[#030303]">
+      <section id="home" className="relative min-h-[760px] h-[100svh] overflow-hidden bg-[#030303]">
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_58%_48%,rgba(100,8,25,0.22),transparent_52%)]" />
 
         <div
@@ -257,6 +257,7 @@ export default function Scene() {
             <div className="hidden items-center gap-9 text-[10px] uppercase tracking-[0.24em] text-white/55 md:flex">
               <a className="transition hover:text-rose-200" href="#about">About</a>
               <a className="transition hover:text-rose-200" href="#experience">Experience</a>
+              <a className="transition hover:text-rose-200" href="#gallery">Gallery</a>
               <a className="transition hover:text-rose-200" href="#process">The process</a>
             </div>
             <a href="#contact" className="rounded-full border border-rose-200/40 px-5 py-2.5 text-[9px] uppercase tracking-[0.22em] text-rose-100 transition hover:bg-rose-200 hover:text-black">
@@ -288,11 +289,11 @@ export default function Scene() {
           <span className="text-rose-200/70">01</span> / Digital sculpture
         </div>
 
-        <div className="absolute inset-x-0 bottom-0 z-40 flex flex-col items-center gap-4 px-4 pb-7">
+        <div className="absolute inset-x-0 bottom-0 z-40 flex flex-col items-center gap-3 px-3 pb-5 sm:gap-4 sm:px-4 sm:pb-7">
           <p className="text-center text-[9px] uppercase tracking-[0.3em] text-white/45">
             {revealed ? "The portrait, revealed" : "A portrait formed by thousands of points"}
           </p>
-          <div className="flex max-w-4xl flex-wrap items-center justify-center gap-2">
+          <div className="flex w-full max-w-4xl flex-wrap items-center justify-center gap-2">
             <button
               type="button"
               onClick={() => setRevealed((value) => !value)}
@@ -382,6 +383,53 @@ export default function Scene() {
               <h3 className="mt-8 text-2xl font-light">Original and abstract</h3>
               <p className="mt-4 text-sm leading-7 text-white/45">Move between the original portrait and its particle interpretation with a smooth transition.</p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" className="bg-[#080708] px-6 py-24 sm:px-8 md:px-12 md:py-32">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+            <div>
+              <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">03 — Selected visuals</p>
+              <h2 className="mt-5 text-4xl font-extralight tracking-[-0.04em] sm:text-5xl">A closer look at the form.</h2>
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-white/45">Three stages of the artwork, from the original portrait to the sculptural shapes used to build its particle form.</p>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-black">
+                <img src="/images/photo.png" alt="Original portrait reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
+                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">01 / Original</span>
+              </div>
+              <figcaption className="p-5">
+                <h3 className="text-lg font-light">The source image</h3>
+                <p className="mt-2 text-xs leading-6 text-white/40">The portrait that inspires the digital artwork.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-black">
+                <img src="/images/clay-front.png" alt="Front clay silhouette reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
+                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">02 / Front view</span>
+              </div>
+              <figcaption className="p-5">
+                <h3 className="text-lg font-light">The front silhouette</h3>
+                <p className="mt-2 text-xs leading-6 text-white/40">A shape reference used to define the portrait outline.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="group min-w-0 overflow-hidden rounded-xl border border-white/10 bg-[#100c0e] sm:col-span-2 lg:col-span-1">
+              <div className="relative aspect-[4/5] overflow-hidden bg-black">
+                <img src="/images/clay-side.png" alt="Side clay silhouette reference" loading="lazy" className="h-full w-full object-contain p-3 transition duration-700 group-hover:scale-[1.03]" />
+                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/60 px-3 py-1.5 text-[8px] uppercase tracking-[0.22em] text-white/70">03 / Side view</span>
+              </div>
+              <figcaption className="p-5">
+                <h3 className="text-lg font-light">The depth reference</h3>
+                <p className="mt-2 text-xs leading-6 text-white/40">A side silhouette that helps shape the 3D point cloud.</p>
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
