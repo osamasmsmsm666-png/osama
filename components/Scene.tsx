@@ -369,23 +369,55 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="about" className="relative border-t border-white/10 bg-[#0b090a] px-6 py-20 sm:px-7 sm:py-28 md:px-12 md:py-36">
-        <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[0.8fr_1.2fr] md:gap-24">
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">01 — About the project</p>
-            <h2 className="mt-6 text-4xl font-extralight leading-tight tracking-[-0.04em] md:text-5xl">
-              More than an image.
-              <br /><span className="italic text-rose-200">A living form.</span>
-            </h2>
-          </div>
-          <div className="max-w-2xl self-end">
-            <p className="text-base font-light leading-8 text-white/65 md:text-lg">
-              Portrait in Dots explores the space between photography and digital sculpture. A familiar portrait is reimagined as a field of tiny points, giving a still image depth, movement, and a sense of life.
-            </p>
-            <div className="mt-10 grid grid-cols-2 gap-6 border-t border-white/10 pt-6 sm:grid-cols-3">
-              <div><p className="text-2xl font-light text-rose-100">3D</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Particle form</p></div>
-              <div><p className="text-2xl font-light text-rose-100">Live</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Motion response</p></div>
-              <div><p className="text-2xl font-light text-rose-100">Web</p><p className="mt-2 text-[9px] uppercase tracking-[0.2em] text-white/40">Interactive art</p></div>
+      <section id="about" className="relative overflow-hidden border-t border-white/10 bg-[#0b090a] px-6 py-24 sm:px-7 sm:py-28 md:px-12 md:py-36">
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-[42%] bg-[radial-gradient(ellipse_at_top_right,rgba(116,24,46,0.13),transparent_68%)]" />
+        <div className="relative mx-auto max-w-7xl">
+          <div className="grid gap-12 md:grid-cols-[0.72fr_1.28fr] md:gap-20">
+            <div className="flex flex-col justify-between">
+              <div>
+                <p className="flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/70">
+                  <span className="h-px w-7 bg-rose-300/60" /> 01 — About the project
+                </p>
+                <h2 className="mt-8 max-w-sm text-4xl font-extralight leading-[1.12] tracking-[-0.055em] sm:text-5xl md:text-[3.6rem]">
+                  More than an image.
+                  <span className="mt-2 block italic text-rose-200">A living form.</span>
+                </h2>
+              </div>
+              <div className="mt-12 hidden border-l border-rose-200/25 pl-5 md:block">
+                <p className="text-[9px] uppercase tracking-[0.28em] text-white/35">Project overview</p>
+                <p className="mt-3 text-xs leading-6 text-white/45">Photography, reimagined through a three-dimensional point cloud.</p>
+              </div>
+            </div>
+
+            <div className="min-w-0">
+              <div className="border-y border-white/10 py-8 sm:py-10">
+                <p className="max-w-3xl text-lg font-light leading-8 text-white/75 sm:text-xl sm:leading-9">
+                  Portrait in Dots explores the space between photography and digital sculpture. A familiar portrait is reimagined as a field of tiny points, giving a still image depth, movement, and a sense of life.
+                </p>
+                <div className="mt-8 flex items-center gap-3 text-[9px] uppercase tracking-[0.25em] text-rose-200/65">
+                  <span className="h-px w-8 bg-rose-200/50" /> An interactive digital artwork
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 divide-x divide-white/10">
+                <div className="py-7 pr-3 sm:py-8 sm:pr-6">
+                  <p className="text-2xl font-light tracking-tight text-rose-100 sm:text-3xl">3D</p>
+                  <p className="mt-3 text-[8px] uppercase leading-4 tracking-[0.16em] text-white/40 sm:text-[9px] sm:tracking-[0.2em]">Particle form</p>
+                </div>
+                <div className="px-3 py-7 sm:px-6 sm:py-8">
+                  <p className="text-2xl font-light tracking-tight text-rose-100 sm:text-3xl">Live</p>
+                  <p className="mt-3 text-[8px] uppercase leading-4 tracking-[0.16em] text-white/40 sm:text-[9px] sm:tracking-[0.2em]">Motion response</p>
+                </div>
+                <div className="py-7 pl-3 sm:py-8 sm:pl-6">
+                  <p className="text-2xl font-light tracking-tight text-rose-100 sm:text-3xl">Web</p>
+                  <p className="mt-3 text-[8px] uppercase leading-4 tracking-[0.16em] text-white/40 sm:text-[9px] sm:tracking-[0.2em]">Interactive art</p>
+                </div>
+              </div>
+
+              <div className="mt-2 flex items-center justify-between border-t border-white/10 pt-5 text-[8px] uppercase tracking-[0.22em] text-white/30">
+                <span>Concept · Form · Interaction</span>
+                <span>01 / 05</span>
+              </div>
             </div>
           </div>
         </div>
