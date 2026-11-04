@@ -574,30 +574,90 @@ export default function Scene() {
         </div>
       </section>
 
-      <section id="process" className="border-y border-white/10 bg-[#0b090a] px-6 py-20 sm:px-7 sm:py-24 md:px-12 md:py-32">
-        <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2 md:items-center">
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#120d10] p-8 md:p-12">
-            <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-rose-900/20 blur-3xl" />
-            <div className="relative">
-              <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">Behind the image</p>
-              <div className="mt-10 flex aspect-square items-center justify-center rounded-full border border-rose-200/10">
-                <div className="flex h-3/4 w-3/4 items-center justify-center rounded-full border border-rose-200/15">
-                  <div className="h-2/3 w-2/3 rounded-full border border-rose-200/20 bg-[radial-gradient(circle,rgba(157,35,62,0.22),transparent_68%)]" />
+      <section id="process" className="border-y border-white/10 bg-[#0b090a] px-6 py-24 sm:px-7 sm:py-28 md:px-12 md:py-36">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 border-b border-white/10 pb-10 md:grid-cols-[0.9fr_0.7fr] md:items-end md:pb-14">
+            <div>
+              <p className="flex items-center gap-3 text-[9px] uppercase tracking-[0.38em] text-rose-200/70">
+                <span className="h-px w-7 bg-rose-300/60" /> 04 — The process
+              </p>
+              <h2 className="mt-7 max-w-2xl text-4xl font-extralight leading-[1.1] tracking-[-0.055em] sm:text-5xl md:text-6xl">
+                From pixels
+                <span className="ml-2 italic text-rose-200">to particles.</span>
+              </h2>
+            </div>
+            <p className="max-w-md text-sm leading-7 text-white/50 md:justify-self-end">
+              Every point has a place. Follow the transformation from a source photograph to an interactive three-dimensional portrait.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+            <div className="flex min-h-[320px] flex-col justify-between border border-white/10 bg-[#120d10] p-7 sm:p-9 lg:min-h-[440px]">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] uppercase tracking-[0.28em] text-rose-200/65">Transformation map</span>
+                <span className="text-[8px] uppercase tracking-[0.2em] text-white/30">01 — 03</span>
+              </div>
+              <div className="my-10 grid grid-cols-3 items-center gap-2 sm:gap-4">
+                <div className="flex flex-col items-center text-center">
+                  <div className="flex aspect-square w-full max-w-[104px] items-center justify-center border border-rose-200/20 bg-black/20">
+                    <span className="text-4xl font-extralight text-rose-100/80">I</span>
+                  </div>
+                  <span className="mt-4 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:text-[9px]">Image</span>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="flex aspect-square w-full max-w-[104px] items-center justify-center border border-rose-200/20 bg-black/20">
+                    <span className="text-4xl font-extralight text-rose-100/80">D</span>
+                  </div>
+                  <span className="mt-4 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:text-[9px]">Data</span>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="flex aspect-square w-full max-w-[104px] items-center justify-center border border-rose-200/20 bg-black/20">
+                    <span className="text-4xl font-extralight text-rose-100/80">3D</span>
+                  </div>
+                  <span className="mt-4 text-[8px] uppercase tracking-[0.18em] text-white/45 sm:text-[9px]">Sculpture</span>
                 </div>
               </div>
-              <p className="mt-8 text-center text-[9px] uppercase tracking-[0.3em] text-white/35">Image → Data → Sculpture</p>
+              <div className="border-t border-white/10 pt-5">
+                <p className="text-[9px] uppercase tracking-[0.25em] text-white/35">The creative pipeline</p>
+                <p className="mt-2 text-sm font-light text-white/70">Image <span className="px-2 text-rose-200/70">→</span> Data <span className="px-2 text-rose-200/70">→</span> Sculpture</p>
+              </div>
             </div>
-          </div>
-          <div>
-            <p className="text-[9px] uppercase tracking-[0.38em] text-rose-200/70">03 — The process</p>
-            <h2 className="mt-6 text-4xl font-extralight leading-tight tracking-[-0.04em] md:text-5xl">From pixels to particles.</h2>
-            <p className="mt-7 text-sm leading-8 text-white/55">
-              The artwork begins with an image, which is translated into a structured point cloud. Position, depth, and visual detail work together to rebuild the portrait in a three-dimensional space.
-            </p>
-            <div className="mt-9 space-y-5">
-              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">01</span><div><h3 className="text-sm text-white/85">Capture the shape</h3><p className="mt-1 text-xs leading-6 text-white/40">Extract the portrait silhouette and image details.</p></div></div>
-              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">02</span><div><h3 className="text-sm text-white/85">Build the point cloud</h3><p className="mt-1 text-xs leading-6 text-white/40">Give each particle its own position and color.</p></div></div>
-              <div className="flex gap-5 border-t border-white/10 pt-5"><span className="text-xs text-rose-200">03</span><div><h3 className="text-sm text-white/85">Bring it to life</h3><p className="mt-1 text-xs leading-6 text-white/40">Render the sculpture and make it interactive.</p></div></div>
+
+            <div className="flex flex-col">
+              <article className="grid grid-cols-[52px_1fr] gap-4 border-t border-white/10 py-6 sm:grid-cols-[72px_1fr] sm:gap-6 sm:py-8">
+                <span className="text-2xl font-extralight tracking-tight text-rose-200 sm:text-3xl">01</span>
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="text-xl font-light text-white/90 sm:text-2xl">Capture the shape</h3>
+                    <span className="text-[8px] uppercase tracking-[0.2em] text-white/30">Source image</span>
+                  </div>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-white/45">Extract the portrait silhouette and image details to establish the visual structure of the artwork.</p>
+                </div>
+              </article>
+              <article className="grid grid-cols-[52px_1fr] gap-4 border-t border-white/10 py-6 sm:grid-cols-[72px_1fr] sm:gap-6 sm:py-8">
+                <span className="text-2xl font-extralight tracking-tight text-rose-200 sm:text-3xl">02</span>
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="text-xl font-light text-white/90 sm:text-2xl">Build the point cloud</h3>
+                    <span className="text-[8px] uppercase tracking-[0.2em] text-white/30">Position & detail</span>
+                  </div>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-white/45">Translate image information into individual points, each with its own position, depth, and color.</p>
+                </div>
+              </article>
+              <article className="grid grid-cols-[52px_1fr] gap-4 border-y border-white/10 py-6 sm:grid-cols-[72px_1fr] sm:gap-6 sm:py-8">
+                <span className="text-2xl font-extralight tracking-tight text-rose-200 sm:text-3xl">03</span>
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="text-xl font-light text-white/90 sm:text-2xl">Bring it to life</h3>
+                    <span className="text-[8px] uppercase tracking-[0.2em] text-white/30">Interactive render</span>
+                  </div>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-white/45">Render the point cloud as a three-dimensional sculpture and connect it to real-time interaction.</p>
+                </div>
+              </article>
+              <div className="mt-6 flex items-center justify-between text-[8px] uppercase tracking-[0.22em] text-white/30">
+                <span>From a still image to a living form</span>
+                <span>04 / 05</span>
+              </div>
             </div>
           </div>
         </div>
