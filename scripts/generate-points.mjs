@@ -17,12 +17,15 @@ async function loadImage(file) {
 }
 
 async function main() {
+  // Clay images define the outer shape and approximate depth.
+  // The real portrait supplies facial, hair, glasses and clothing shading.
   const front = await loadImage("public/images/clay-front.png");
   const side = await loadImage("public/images/clay-side.png");
+  const photo = await loadImage("public/images/photo.png");
+
   const points = [];
   const sideBounds = new Array(HEIGHT);
 
-  // Estimate a depth range from the side silhouette at each image row.
   for (let y = 0; y < HEIGHT; y++) {
     let min = WIDTH;
     let max = -1;
@@ -39,14 +42,13 @@ async function main() {
     sideBounds[y] = max >= min ? [min, max] : null;
   }
 
-  // Sample the front silhouette. Keep a luminance value for subtle
-  // particle shading so hair, glasses and clothing shadows read better.
   for (let y = 0; y < HEIGHT; y += STRIDE) {
     for (let x = 0; x < WIDTH; x += STRIDE) {
       const i = (y * WIDTH + x) * 3;
-      const r = front[i], g = front[i + 1], b = front[i + 2];
-      const brightness = (r + g + b) / 3;
-      if (brightness >= SILHOUETTE_THRESHOLD) continue;
+      const clayBrightness = (front[i] + front[i + 1] + front[i + 2]) / 3;
+
+      // Only keep pixels inside the front clay silhouette.
+      if (clayBrightness >= SILHOUETTE_THRESHOLD) continue;
 
       const bounds = sideBounds[y];
       if (!bounds) continue;
@@ -54,8 +56,12 @@ async function main() {
       const [minDepth, maxDepth] = bounds;
       const depth = minDepth + Math.random() * Math.max(1, maxDepth - minDepth);
 
-      // 0..1 contrast value; darker source details become brighter red points.
-      const detail = Math.max(0, Math.min(1, (225 - brightness) / 150));
+      // Read detail from the actual photo, not the intentionally blank clay face.
+      const photoBrightness =
+        (photo[i] * 0.299 + photo[i + 1] * 0.587 + photo[i + 2] * 0.114);
+
+      // Increase local contrast so facial and clothing features influence point brightness.
+      const detail = Math.max(0, Math.min(1, (205 - photoBrightness) / 135));
 
       points.push([
         (x / WIDTH - 0.5) * 4,
@@ -68,7 +74,7 @@ async function main() {
 
   fs.mkdirSync("public/data", { recursive: true });
   fs.writeFileSync("public/data/points.json", JSON.stringify(points));
-  console.log(`Generated ${points.length} shaded points`);
+  console.log(`Generated ${points.length} portrait-detail points`);
 }
 
 main().catch((error) => {
