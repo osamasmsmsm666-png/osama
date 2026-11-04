@@ -12,15 +12,23 @@ function ParticleModel() {
   const geometry = useMemo(() => {
     const data: number[][] = JSON.parse(positions);
     const array = new Float32Array(data.length * 3);
+    const colors = new Float32Array(data.length * 3);
 
     data.forEach((point, i) => {
       array[i * 3] = point[0];
       array[i * 3 + 1] = point[1];
       array[i * 3 + 2] = point[2];
+
+      const detail = point[3] ?? 0.45;
+      const glow = 0.28 + detail * 0.9;
+      colors[i * 3] = Math.min(1, glow);
+      colors[i * 3 + 1] = 0.012 + detail * 0.025;
+      colors[i * 3 + 2] = 0.035 + detail * 0.075;
     });
 
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(array, 3));
+    geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     geo.computeBoundingSphere();
     return geo;
   }, [positions]);
@@ -38,8 +46,8 @@ function ParticleModel() {
   return (
     <points ref={pointsRef} geometry={geometry} scale={1.15}>
       <pointsMaterial
-        color="#B5122D"
-        size={0.017}
+        vertexColors
+        size={0.016}
         sizeAttenuation
         transparent
         opacity={0.96}
