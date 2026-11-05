@@ -4,7 +4,7 @@ import fs from "fs";
 
 const WIDTH = 1200;
 const HEIGHT = 896;
-const STRIDE = 2;
+const STRIDE = 1;
 const SILHOUETTE_THRESHOLD = 226;
 
 async function loadImage(file) {
