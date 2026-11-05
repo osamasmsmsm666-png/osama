@@ -10,11 +10,13 @@ function ParticleModel({
   explosionKey,
   pulseActive,
   cursorFieldActive,
+  revealed,
 }: {
   waveActive: boolean;
   explosionKey: number;
   pulseActive: boolean;
   cursorFieldActive: boolean;
+  revealed: boolean;
 }) {
   const pointsRef = useRef<THREE.Points>(null);
   const positions = useLoader(THREE.FileLoader, "/data/points.json") as string;
@@ -22,6 +24,7 @@ function ParticleModel({
   const data = useMemo(() => JSON.parse(positions) as number[][], [positions]);
   const explosionStart = useRef<number | null>(null);
   const previousExplosionKey = useRef(explosionKey);
+  const revealProgress = useRef(0);
 
   const explosionDirections = useMemo(() => {
     const directions = new Float32Array(data.length * 4);
@@ -81,6 +84,9 @@ function ParticleModel({
     const values = positionAttribute.array as Float32Array;
     const elapsed = state.clock.elapsedTime;
     const waveCenter = ((elapsed * 0.9) % 7) - 3.5;
+    const delta = state.clock.getDelta();
+    revealProgress.current = THREE.MathUtils.damp(revealProgress.current, revealed ? 1 : 0, 1.8, delta);
+    const reveal = revealProgress.current * revealProgress.current * (3 - 2 * revealProgress.current);
 
     if (explosionKey !== previousExplosionKey.current) {
       previousExplosionKey.current = explosionKey;
@@ -108,6 +114,16 @@ function ParticleModel({
       let offsetX = 0;
       let offsetY = 0;
       let offsetZ = 0;
+
+      const seedX = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+      const seedY = Math.sin(i * 269.5 + 183.3) * 24634.6345;
+      const seedZ = Math.sin(i * 78.233 + 12.9898) * 15678.5453;
+      const scatteredX = (seedX - Math.floor(seedX) - 0.5) * 5.2;
+      const scatteredY = (seedY - Math.floor(seedY) - 0.5) * 4.4;
+      const scatteredZ = (seedZ - Math.floor(seedZ) - 0.5) * 2.8;
+      const targetX = THREE.MathUtils.lerp(scatteredX, x, reveal);
+      const targetY = THREE.MathUtils.lerp(scatteredY, baseY, reveal);
+      const targetZ = THREE.MathUtils.lerp(scatteredZ, baseZ, reveal);
 
       if (cursorFieldActive) {
         // Convert the normalized pointer into the portrait's local coordinate space.
@@ -138,9 +154,9 @@ function ParticleModel({
       const burstY = explosionDirections[i * 4 + 1] * burst;
       const burstZ = explosionDirections[i * 4 + 2] * burst;
 
-      values[i * 3] = x + offsetX + burstX;
-      values[i * 3 + 1] = baseY + offsetY + burstY;
-      values[i * 3 + 2] = baseZ + offsetZ + burstZ;
+      values[i * 3] = targetX + offsetX + burstX;
+      values[i * 3 + 1] = targetY + offsetY + burstY;
+      values[i * 3 + 2] = targetZ + offsetZ + burstZ;
     }
     positionAttribute.needsUpdate = true;
 
@@ -153,8 +169,8 @@ function ParticleModel({
 
     const material = pointsRef.current.material as THREE.PointsMaterial;
     const pulse = pulseActive ? (Math.sin(elapsed * 2.4) + 1) * 0.5 : 0;
-    material.size = 0.016 + pulse * 0.006;
-    material.opacity = 0.82 + pulse * 0.16;
+    material.size = THREE.MathUtils.lerp(0.014, 0.019, reveal) + pulse * 0.004;
+    material.opacity = THREE.MathUtils.lerp(0.62, 1, reveal) + pulse * 0.08;
   });
 
   return (
@@ -221,10 +237,7 @@ export default function Scene() {
       <section id="home" className="relative min-h-[820px] h-[100svh] overflow-hidden bg-[#030303] sm:min-h-[760px]">
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_58%_48%,rgba(100,8,25,0.22),transparent_52%)]" />
 
-        <div
-          className={\`absolute inset-0 z-10 transition-opacity duration-[1400ms] ease-in-out \${revealed ? "opacity-0" : "opacity-100"}\`}
-          aria-hidden={revealed}
-        >
+        <div className="absolute inset-0 z-10">
           <Canvas
             camera={{ position: [0, 0, 6.2], fov: 45 }}
             dpr={[1, 1.75]}
@@ -236,20 +249,12 @@ export default function Scene() {
               explosionKey={explosionKey}
               pulseActive={pulseActive}
               cursorFieldActive={cursorFieldActive}
+              revealed={revealed}
             />
           </Canvas>
         </div>
 
-        <div
-          className={\`absolute inset-0 z-20 flex items-center justify-center transition-opacity duration-[1400ms] ease-in-out \${revealed ? "opacity-100" : "pointer-events-none opacity-0"}\`}
-          aria-hidden={!revealed}
-        >
-          <img
-            src="/images/photo.png"
-            alt="Portrait"
-            className="h-full w-full object-contain"
-          />
-        </div>
+
 
         <div className="pointer-events-none absolute inset-0 z-20 bg-gradient-to-b from-black/55 via-transparent to-black/75" />
 
