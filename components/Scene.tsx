@@ -25,6 +25,18 @@ function ParticleModel({
   const explosionStart = useRef<number | null>(null);
   const previousExplosionKey = useRef(explosionKey);
   const revealProgress = useRef(0);
+  const scatterPositions = useMemo(() => {
+    const positions = new Float32Array(data.length * 3);
+    data.forEach((_, i) => {
+      const seedX = Math.sin(i * 127.1 + 311.7) * 43758.5453;
+      const seedY = Math.sin(i * 269.5 + 183.3) * 24634.6345;
+      const seedZ = Math.sin(i * 78.233 + 12.9898) * 15678.5453;
+      positions[i * 3] = (seedX - Math.floor(seedX) - 0.5) * 5.2;
+      positions[i * 3 + 1] = (seedY - Math.floor(seedY) - 0.5) * 4.4;
+      positions[i * 3 + 2] = (seedZ - Math.floor(seedZ) - 0.5) * 2.8;
+    });
+    return positions;
+  }, [data]);
 
   const explosionDirections = useMemo(() => {
     const directions = new Float32Array(data.length * 4);
@@ -60,14 +72,14 @@ function ParticleModel({
       array[i * 3 + 2] = point[2];
 
       const detail = point[3] ?? 0.45;
-      // Blend the source photo's natural colors with the site's rose palette.
+      // Preserve more of the source photograph's natural color and contrast.
       const photoRed = point[4] ?? 0.8;
       const photoGreen = point[5] ?? 0.12;
       const photoBlue = point[6] ?? 0.2;
-      const lift = 0.42 + detail * 0.58;
-      colors[i * 3] = Math.min(1, (photoRed * 0.72 + 0.28) * lift);
-      colors[i * 3 + 1] = Math.min(0.72, (photoGreen * 0.62 + 0.035) * lift);
-      colors[i * 3 + 2] = Math.min(0.78, (photoBlue * 0.62 + 0.065) * lift);
+      const lift = 0.72 + detail * 0.28;
+      colors[i * 3] = Math.min(1, photoRed * lift);
+      colors[i * 3 + 1] = Math.min(1, photoGreen * lift);
+      colors[i * 3 + 2] = Math.min(1, photoBlue * lift);
     });
 
     const geo = new THREE.BufferGeometry();
@@ -115,15 +127,9 @@ function ParticleModel({
       let offsetY = 0;
       let offsetZ = 0;
 
-      const seedX = Math.sin(i * 127.1 + 311.7) * 43758.5453;
-      const seedY = Math.sin(i * 269.5 + 183.3) * 24634.6345;
-      const seedZ = Math.sin(i * 78.233 + 12.9898) * 15678.5453;
-      const scatteredX = (seedX - Math.floor(seedX) - 0.5) * 5.2;
-      const scatteredY = (seedY - Math.floor(seedY) - 0.5) * 4.4;
-      const scatteredZ = (seedZ - Math.floor(seedZ) - 0.5) * 2.8;
-      const targetX = THREE.MathUtils.lerp(scatteredX, x, reveal);
-      const targetY = THREE.MathUtils.lerp(scatteredY, baseY, reveal);
-      const targetZ = THREE.MathUtils.lerp(scatteredZ, baseZ, reveal);
+      const targetX = THREE.MathUtils.lerp(scatterPositions[i * 3], x, reveal);
+      const targetY = THREE.MathUtils.lerp(scatterPositions[i * 3 + 1], baseY, reveal);
+      const targetZ = THREE.MathUtils.lerp(scatterPositions[i * 3 + 2], baseZ, reveal);
 
       if (cursorFieldActive) {
         // Convert the normalized pointer into the portrait's local coordinate space.
